@@ -41,6 +41,12 @@ class Universe {
 
 	public function populate($authorities, $min_influence = 1) {
 	
+		if (count($authorities) > 15) {
+			$error_message = __METHOD__ . " failed. The maximum number of authorities is 15. Dying.";
+			Logger::fatal($error_message);
+			die($error_message);
+		}
+	
 		$owner_screen_name = \OpenFuego\TWITTER_SCREEN_NAME;
 	
 		$twitter = new TwitterHandle();
@@ -59,7 +65,9 @@ class Universe {
 			$authority_friends_ids = $twitter->get('friends/ids', array('screen_name' => $authority['screen_name']));
 
 			if ($twitter->http_code != 200) {
-				die('Dying, ' . $twitter->http_code);
+				$error_message = __METHOD__ . " failed, Twitter error {$twitter->http_code}. Dying.";
+				Logger::fatal($error_message);
+				die();
 			}
 
 			$authority_friends_ids = $authority_friends_ids['ids'];
