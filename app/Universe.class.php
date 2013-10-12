@@ -2,6 +2,7 @@
 
 use OpenFuego\lib\TwitterHandle as TwitterHandle;
 use OpenFuego\lib\DbHandle as DbHandle;
+use OpenFuego\lib\Logger as Logger;
 
 class Universe {
 
